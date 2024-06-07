@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from Region.models import Region
 
 # Create your models here.
 
@@ -19,6 +20,7 @@ class Player(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=255, unique=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
     classic_points = models.FloatField(default=0)
     platformer_points = models.FloatField(default=0)
 

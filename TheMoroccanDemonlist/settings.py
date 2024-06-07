@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     'django_browser_reload',
     'Player',
+    'Region',
 ]
 
 MIDDLEWARE = [
