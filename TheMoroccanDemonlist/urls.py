@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('player/', include('Player.urls')),
+    path('levels/', include('Level.urls')),
 ]

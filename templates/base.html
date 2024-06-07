@@ -21,7 +21,7 @@
                                 Classic Demonlist
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Main list</a></li>
+                                <li><a class="dropdown-item" href="{% url 'Level:classic_mainlist' %}">Main list</a></li>
                                 <li><a class="dropdown-item" href="#">Extended list</a></li>
                                 <li><a class="dropdown-item" href="#">Legacy list</a></li>
                                 <li><a class="dropdown-item" href="#">Stat Viewer</a></li>
@@ -33,8 +33,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Main list</a></li>
-                                <li><a class="dropdown-item" href="#">Extended list</a></li>
-                                <li><a class="dropdown-item" href="#">Legacy list</a></li>
+                                <li><a class="dropdown-item disabled" href="#">Extended list</a></li>
+                                <li><a class="dropdown-item disabled" href="#">Legacy list</a></li>
                                 <li><a class="dropdown-item" href="#">Stat Viewer</a></li>
                             </ul>
                         </li>
@@ -45,12 +45,23 @@
             </div>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
+                    {% if request.user.is_staff %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Add a level
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Classic level</a></li>
+                            <li><a class="dropdown-item" href="#">Platformer level</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
                     {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ request.user.username }}
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li><a class="dropdown-item" href="#">Submit a record</a></li>
                             <li><a class="dropdown-item" href="{% url 'Player:logout' %}">Logout</a></li>

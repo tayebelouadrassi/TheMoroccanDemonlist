@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from .models import Player
 from django.contrib import messages
 from .forms import CustomUserCreationForm
 
@@ -12,8 +12,8 @@ def login_user(request):
         password = request.POST['password']
 
         try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
+            user = Player.objects.get(username=username)
+        except Player.DoesNotExist:
             messages.error(request, "This user does not exist.")
             return redirect("Player:login")
         
