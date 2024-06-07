@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "whitenoise.runserver_nostatic",
     'django_browser_reload',
+    'adminsortable2',
     'Player',
     'Region',
     'Level',
+    'LevelRecord',
 ]
 
 MIDDLEWARE = [
