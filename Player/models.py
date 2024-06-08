@@ -80,10 +80,8 @@ def update_region_classic_points(sender, instance, created, **kwargs):
     if not created:
         region = instance.region
         region.classic_points = region.calculate_classic_points()
-        print(region.calculate_classic_points())
         if region.classic_points == None:
             region.classic_points = 0
-        print(region.calculate_classic_points())
         region.save()
 
 @receiver(post_save, sender=Player)

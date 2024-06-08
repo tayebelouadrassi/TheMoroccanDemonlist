@@ -2,37 +2,33 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import Player
 from django.contrib import messages
-from .forms import PlayerCreationForm
+from .forms import PlayerCreationForm, LoginForm
 from levelrecord.models import ClassicLevelRecord
 from django.db.models import Q
 
 # Create your views here.
 
 def login_user(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-
-        try:
-            user = Player.objects.get(username=username)
-        except Player.DoesNotExist:
-            messages.error(request, "This user does not exist.")
-            return redirect("player:login")
-        
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect("home")
-        else:
-            messages.error(request, ("Password is incorrect."))
-            return redirect("player:login")
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data['username']
+            password=form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            else:
+                messages.error(request, ("Incorrect credentials. Please try again."))
     else:
-        return render(request, 'player/login.html')
+        form = LoginForm()
+
+    return render(request, 'player/login.html', {'form': form})
     
 def logout_user(request):
     logout(request)
     messages.success(request, ("You were logged out."))
+    
     return redirect("player:login")
 
 def register_user(request):
@@ -49,11 +45,7 @@ def register_user(request):
     else:
         form = PlayerCreationForm()
 
-    context = {
-        'form':form,
-    }
-
-    return render(request, 'player/register.html', context)
+    return render(request, 'player/register.html', {'form': form})
 
 def profile(request, username):
     player = Player.objects.get(username=username)
