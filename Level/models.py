@@ -25,7 +25,7 @@ class Level(models.Model):
         abstract = True
 
     def __str__(self):
-        return f"{self.id} - {self.name}"
+        return f"{self.name}"
     
 class ClassicLevel(Level):
     DURATIONS = [

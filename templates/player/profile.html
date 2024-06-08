@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 {% block title %}{% endblock %}
 {% block content %}
-
+<h1>{{ player.username }}'s Profile</h1>
+  <h2>Beaten Levels:</h2>
+    {% for record in beaten_levels %}
+        <a href="{{ record.record_link }}">{{ record.level.name }}</a><br>
+    {% endfor %}
+    <h2>Player ranking:</h2>
+    <p>#{{ player_ranking }}</p>
+    <h2>Hardest level:</h2>
+    <p>{{ hardest_level.level.name }}</p>
+    <h2>First victors:</h2>
+    {% for record in first_victors %}
+        <p>{{ record.level.name }}</p><br>
+    {% endfor %}
+    <h2>Level Counts by Ranking:</h2>
+    <li>Main: {{ level_counts.main }}</li>
+    <li>Extended: {{ level_counts.extended }}</li>
+    <li>Legacy: {{ level_counts.legacy }}</li>
 {% endblock %}
