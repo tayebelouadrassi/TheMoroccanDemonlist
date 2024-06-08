@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Classic Mainlist{% endblock %}
+{% block title %}Classic Main List{% endblock %}
 {% block content %}
 {% for level in mainlist_levels|dictsort:"ranking" %}
   <div class="card mt-3 mx-auto{% if forloop.last %} mb-3{% endif %}" style="width: 780px; max-width: 100%;">
@@ -9,37 +9,10 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title text-decoration-none text-black"><a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal{{level.id}}">#{{ level.ranking }} - {{ level.name }}</a></h5>
+          <h5 class="card-title"><a class="text-decoration-none text-black" style="cursor: pointer;" href="{% url 'level:classic_level_detail' level.id %}">#{{ level.ranking }} - {{ level.name }}</a></h5>
           <p class="card-text"><strong>Published by:</strong> {{ level.publisher }}</p>
           <button type="button" class="btn btn-primary"  data-bs-placement="right" data-bs-content="Copied to clipboard!" data-bs-toggle="popover" data-bs-container="body" data-level-id="{{ level.id }}" id="liveAlertBtn">Copy Level ID</button>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="modal{{level.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ level.name }} details</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p><strong>Level ID:</strong> {{ level.id }}</p>
-          <p><strong>Duration:</strong> {{ level.duration }}</p>
-          <p><strong>Publisher:</strong> {{ level.publisher }}</p>
-          <p><strong>Difficulty:</strong> {{ level.get_difficulty_display }}</p>
-          <p><strong>Ranking:</strong> {{ level.ranking }}</p>
-          <p><strong>Points:</strong> {{ level.points }}</p>
-          <p><strong>Min points:</strong> {{ level.min_points }}</p>
-          <p><strong>List percentage:</strong> {{ level.min_completion }}%</p>
-          <h2>Records for {{ level.name }}:</h2>
-        </div>
-        <ul>
-          {% for record in level.classiclevelrecord_set.all reversed%}
-            <li>{{ record.player.name }} - {{ record.record_percentage }}% - <a class="text-decoration-none" href="{{ record.record_video_link }}" target="_blank">YouTube</a></li>
-          {% endfor %}
-        </ul>
       </div>
     </div>
   </div>

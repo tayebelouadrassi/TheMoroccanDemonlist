@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ level.name }} details{% endblock %}
+{% block content %}
+<div class="modal-body">
+    <p><strong>Level ID:</strong> {{ level.id }}</p>
+    <p><strong>Duration:</strong> {{ level.duration }}</p>
+    <p><strong>Publisher:</strong> {{ level.publisher }}</p>
+    <p><strong>Difficulty:</strong> {{ level.get_difficulty_display }}</p>
+    <p><strong>Ranking:</strong> {{ level.ranking }}</p>
+    <p><strong>Points:</strong> {{ level.points }}</p>
+    <p><strong>Min points:</strong> {{ level.min_points }}</p>
+    <p><strong>List percentage:</strong> {{ level.min_completion }}%</p>
+    <h2>Records for {{ level.name }}:</h2>
+    <p>Total Records: {{ total_records }} (out of which {{ perfect_records }} are 100%)</p>
+    <ul>
+        {% for record in level.classiclevelrecord_set.all reversed %}
+            <li>{{ record.player.username }} - {{ record.record_percentage }}% - <a class="text-decoration-none" href="{{ record.record_link }}" target="_blank">YouTube</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

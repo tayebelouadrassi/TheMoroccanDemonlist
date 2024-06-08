@@ -32,6 +32,16 @@
             </div>
 
             <div class="col-md-6 mb-3">
+                <label for="region" class="form-label">Region<br></label>
+                {{ form.region }}
+                {% if form.region.errors %}
+                    <div class="text-danger">
+                    {{ form.region.errors.as_text }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
                 <label for="password1" class="form-label">Password<br></label>
                 <input type="password" class="form-control" id="password1" name="password1" required>
                 {% if form.password1.errors %}

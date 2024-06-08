@@ -44,10 +44,10 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     'django_browser_reload',
     'adminsortable2',
-    'Player',
-    'Region',
-    'Level',
-    'LevelRecord',
+    'player',
+    'region',
+    'level',
+    'levelrecord',
 ]
 
 MIDDLEWARE = [
@@ -144,4 +144,4 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'Player.Player'
+AUTH_USER_MODEL = 'player.Player'
