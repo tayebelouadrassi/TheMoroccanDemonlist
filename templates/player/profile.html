@@ -117,7 +117,11 @@
           <div class="row mt-4">
             <div class="col-sm-6">
               <h2 class="card-title">Hardest Level:</h2>
+              {% if hardest_level %}
               <a href="{% url 'level:classic_level_detail' hardest_level.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ hardest_level.level.name }}</a>
+                {% else %}
+                <a class="btn btn-outline-primary btn-lg me-2 mb-2">No hardest level found</a>
+                {% endif %}
             </div>
             <div class="col-sm-6">
               <h2 class="card-title">Level Counts:</h2>
@@ -135,9 +139,13 @@
         <div class="card-body">
           <h2 class="card-title">Beaten levels:</h2>
           <div class="d-flex flex-wrap">
+            {% if beaten_levels %}
             {% for record in beaten_levels %}
               <a href="{% url 'level:classic_level_detail' record.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ record.level.name }}</a>
             {% endfor %}
+            {% else %}
+              <a class="btn btn-outline-primary btn-lg me-2 mb-2">No beaten levels found</a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -145,9 +153,13 @@
         <div class="card-body">
           <h2 class="card-title">First victor in:</h2>
           <div class="d-flex flex-wrap">
+            {% if beaten_levels %}
             {% for record in first_victors %}
               <a href="{% url 'level:classic_level_detail' record.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ record.level.name }}</a>
             {% endfor %}
+            {% else %}
+              <a class="btn btn-outline-primary btn-lg me-2 mb-2">No first victor levels found</a>
+            {% endif %}
           </div>
         </div>
       </div>

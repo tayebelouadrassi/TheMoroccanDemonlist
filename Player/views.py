@@ -143,7 +143,6 @@ def profile(request, username):
         'first_victors': first_victors,
         'level_counts': level_counts,
     }
-
     return render(request, 'player/profile.html', context)
 
 @login_required
