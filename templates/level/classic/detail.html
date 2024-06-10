@@ -39,7 +39,7 @@
                             <tbody>
                                 {% for record in level.classiclevelrecord_set.all %}
                                     <tr>
-                                        <td>{{ record.player.username }}</td>
+                                        <td><a href="{% url 'player:profile' record.player.username %}" class="text-decoration-none text-black">{{ record.player.username }}</a></td>
                                         <td>{{ record.record_percentage }}%</td>
                                         <td>
                                             <a class="btn btn-outline-primary btn-sm" href="{{ record.record_link }}" target="_blank">YouTube</a>
