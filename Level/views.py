@@ -1,9 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import ClassicLevel, PlatformerLevel
 from region.models import Region
 from player.models import Player
 from .forms import LevelSearchForm
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib import messages
 
@@ -28,19 +27,32 @@ def search(request):
             return redirect("level:classic_mainlist")
 
 def detail(request, pk):
-    level = ClassicLevel.objects.get(pk=pk)
-    total_records = level.classiclevelrecord_set.count()
-    perfect_records = level.classiclevelrecord_set.filter(record_percentage=100).count()
-    youtube_id = level.youtube_link.split('.be/')[-1]
-    staff_members = Player.objects.filter(is_staff=True)
-    context = {
-        'level': level,
-        'total_records': total_records,
-        'perfect_records': perfect_records,
-        'youtube_id': youtube_id,
-        'staff_members': staff_members
-    }
-    return render(request, 'level/classic/detail.html', context)
+    if ClassicLevel.objects.filter(pk=pk).exists():
+        level = get_object_or_404(ClassicLevel, pk=pk)
+        total_records = level.classiclevelrecord_set.count()
+        perfect_records = level.classiclevelrecord_set.filter(record_percentage=100).count()
+        youtube_id = level.youtube_link.split('.be/')[-1]
+        staff_members = Player.objects.filter(is_staff=True)
+        context = {
+            'level': level,
+            'total_records': total_records,
+            'perfect_records': perfect_records,
+            'youtube_id': youtube_id,
+            'staff_members': staff_members
+        }
+        return render(request, 'level/classic/detail.html', context)
+    elif PlatformerLevel.objects.filter(pk=pk).exists():
+        level = get_object_or_404(PlatformerLevel, pk=pk)
+        total_records = level.platformerlevelrecord_set.count()
+        youtube_id = level.youtube_link.split('.be/')[-1]
+        staff_members = Player.objects.filter(is_staff=True)
+        context = {
+            'level': level,
+            'total_records': total_records,
+            'youtube_id': youtube_id,
+            'staff_members': staff_members
+        }
+        return render(request, 'level/platformer/detail.html', context)
 
 def classic_mainlist(request):
     main_levels = ClassicLevel.objects.filter(ranking__lte=75)
@@ -70,3 +82,18 @@ def classic_stat_viewer(request):
     for region in regions:
         region.players = Player.objects.filter(region=region)
     return render(request, 'level/classic/statviewer.html', {'regions': regions})
+
+def platformer_mainlist(request):
+    main_levels = PlatformerLevel.objects.filter(ranking__lte=75)
+    staff_members = Player.objects.filter(is_staff=True)
+    context = {
+        'main_levels': main_levels,
+        'staff_members': staff_members
+    }
+    return render(request, 'level/platformer/mainlist.html', context)
+
+def platformer_stat_viewer(request):
+    regions = Region.objects.all()
+    for region in regions:
+        region.players = Player.objects.filter(region=region)
+    return render(request, 'level/platformer/statviewer.html', {'regions': regions})

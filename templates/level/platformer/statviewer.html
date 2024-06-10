@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Platformer Stat Viewer{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="map-section">
+                <div style="min-height:696px">
+                    <script type="text/javascript" defer src="https://datawrapper.dwcdn.net/xCkE3/embed.js?v=9" charset="utf-8"></script>
+                    <noscript><img src="https://datawrapper.dwcdn.net/xCkE3/full.png" alt="" /></noscript>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="accordion ml-5">
+                {% for region in regions|dictsortreversed:"classic_points" %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne{{region.id}}" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                                {{region}}
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne{{region.id}}" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                {% for player in region.players|dictsortreversed:"platformer_points" %}
+                                    <p>{{ player.username }} - {{ player.platformer_points|floatformat:"2"}} points</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
