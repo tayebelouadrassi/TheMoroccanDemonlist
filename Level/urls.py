@@ -9,4 +9,5 @@ urlpatterns = [
     path('classic-extendedlist/', views.classic_extendedlist, name='classic_extendedlist'),
     path('classic-legacylist/', views.classic_legacylist, name='classic_legacylist'),
     path('classic-stat-viewer/', views.classic_stat_viewer, name='classic_statviewer'),
+    path('search/', views.search, name='search'),
 ]

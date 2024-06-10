@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Player
 from region.models import Region
 from django_recaptcha.fields import ReCaptchaField
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import SetPasswordForm
 
 class PlayerCreationForm(UserCreationForm):
     captcha = ReCaptchaField()
@@ -39,3 +41,9 @@ class LoginForm(forms.Form):
     class Meta:
         model = Player
         fields = ('username', 'password')
+
+class CustomPasswordResetForm(PasswordResetForm):
+    captcha = ReCaptchaField()
+
+class CustomPasswordResetConfirmForm(SetPasswordForm):
+    captcha = ReCaptchaField()

@@ -1,0 +1,7 @@
+<div>
+    <p>You're receiving this email because you created an account at <a href="{{ request.scheme }}://{{ domain }}">{{ domain }}</a>.</p>
+    <p>Please click on the following link to verify your email address:</p>
+    <p><a href="{{ request.scheme }}://{{ domain }}{% url 'player:verify-email-confirm' uidb64=uid token=token %}">{{ request.scheme }}://{{ domain }}{% url 'player:verify-email-confirm' uidb64=uid token=token %}</a></p>
+    <p>Thanks for using our site!</p>
+    <p>TheMoroccanDemonlist team</p>
+</div>

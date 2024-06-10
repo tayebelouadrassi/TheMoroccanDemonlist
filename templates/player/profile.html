@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{% endblock %}
 {% block content %}
+{% if player.is_email_verified == False and request.user == player%}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Please verify your email for a full account experience. <a href="{% url 'player:verify-email' %}">Resend email.</a>
+        </div>
+{% endif %}
 <h1>{{ player.username }}'s Profile</h1>
   <h2>Beaten Levels:</h2>
     {% for record in beaten_levels %}

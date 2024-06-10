@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Search results{% endblock %}
+{% block content %}
+{% if levels %}
+        <ul>
+            {% for level in levels %}
+            <li>
+                <a href="{% url 'level:classic_level_detail' level.id %}">{{ level.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No levels found matching your search.</p>
+    {% endif %}
+{% endblock %}
