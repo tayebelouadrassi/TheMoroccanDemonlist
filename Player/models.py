@@ -32,6 +32,10 @@ class Player(AbstractBaseUser, PermissionsMixin):
     region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
     classic_points = models.FloatField(default=0)
     platformer_points = models.FloatField(default=0)
+    discord = models.CharField(max_length=255, blank=True, null=True)
+    twitter = models.URLField(max_length=255, blank=True, null=True)
+    youtube = models.URLField(max_length=255, blank=True, null=True)
+    twitch = models.URLField(max_length=255, blank=True, null=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']

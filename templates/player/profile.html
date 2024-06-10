@@ -1,26 +1,184 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
+{% load static %}
+{% block title %}{{ player.username }}'s Profile{% endblock %}
 {% block content %}
-{% if player.is_email_verified == False and request.user == player%}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            Please verify your email for a full account experience. <a href="{% url 'player:verify-email' %}">Resend email.</a>
+<div class="container mt-5">
+  {% if not player.is_email_verified and request.user == player %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      Please verify your email for a full account experience.
+      <a href="{% url 'player:verify-email' %}" class="alert-link">Resend email.</a>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h1 class="card-title">{{ player.username }} - #{{ player_ranking }}</h1>
+              <ul class="list-group list-group-horizontal mt-2">
+                <li class="list-unstyled">
+                  {% if player.discord %}
+                    <a class="text-decoration-none">
+                      <img src="{% static 'images/discord.png' %}" style="width:32px;" alt="Discord Icon" class="discord-icon me-1">
+                    </a>
+                  {% endif %}
+                </li>
+                <li class="list-unstyled">
+                  {% if player.youtube %}
+                    <a href="{{ player.youtube }}" target="_blank" class="text-decoration-none">
+                      <img src="{% static 'images/youtube.png' %}" style="width:32px;" alt="YouTube Icon" class="youtube-icon me-1">
+                    </a>
+                  {% endif %}
+                </li>
+                <li class="list-unstyled">
+                  {% if player.twitch %}
+                    <a href="{{ player.twitch }}" target="_blank" class="text-decoration-none">
+                      <img src="{% static 'images/twitch.png' %}" style="width:32px;" alt="Twitch Icon" class="twitch-icon me-1">
+                    </a>
+                  {% endif %}
+                </li>
+                <li class="list-unstyled">
+                  {% if player.twitter %}
+                    <a href="{{ player.twitter }}" target="_blank" class="text-decoration-none">
+                      <img src="{% static 'images/twitter.png' %}" style="width:32px;" alt="Twitter Icon" class="twitter-icon me-1">
+                    </a>
+                  {% endif %}
+                </li>
+                <li class="list-unstyled">
+                    {% if player == request.user %}
+                    <a href="" data-bs-toggle="modal" data-bs-target="#socialModal" class="text-decoration-none ms-3">
+                        <img src="{% static 'images/pencil.png' %}" style="width:32px;" alt="Twitter Icon" class="twitter-icon me-1">
+                    </a>
+                    {% endif %}
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+                <form class="d-flex" role="search" method="post" action="{% url 'level:search' %}">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Search for a player" aria-label="Search" name="query">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+              <div class="modal fade" id="socialModal" tabindex="-1" aria-labelledby="socialModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="socialModalLabel">Edit My Socials</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form method="post" action="{% url 'player:edit_social_platforms' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="discordInput" class="form-label">Discord</label>
+                            {% if player.discord %}
+                            <input type="text" class="form-control" id="discordInput" name="discord" value="{{ player.discord }}" placeholder="@username">
+                            {% else %}
+                            <input type="text" class="form-control" id="discordInput" name="discord" placeholder="@username">
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="youtubeInput" class="form-label">YouTube</label>
+                            {% if player.youtube %}
+                            <input type="text" class="form-control" id="youtubeInput" name="youtube" value="{{ player.youtube }}" placeholder="@username">
+                            {% else %}
+                            <input type="text" class="form-control" id="youtubeInput" name="youtube" placeholder="https://www.youtube.com/channel/username">
+                            {% endif %}
+                          </div>
+                          <div class="mb-3">
+                            <label for="twitchInput" class="form-label">Twitch</label>
+                            {% if player.twitch %}
+                            <input type="text" class="form-control" id="twitchInput" name="twitch" value="{{ player.twitch }}" placeholder="@username">
+                            {% else %}
+                            <input type="text" class="form-control" id="twitchInput" name="twitch" placeholder="https://www.twitch.tv/username">
+                            {% endif %}
+                          </div>
+                          <div class="mb-3">
+                            <label for="twitterInput" class="form-label">Twitter</label>
+                            {% if player.twitter %}
+                            <input type="text" class="form-control" id="twitterInput" name="twitter" value="{{ player.twitter }}" placeholder="@username">
+                            {% else %}
+                            <input type="text" class="form-control" id="twitterInput" name="twitter" placeholder="https://twitter.com/username">
+                            {% endif %}
+                          </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-sm-6">
+              <h2 class="card-title">Hardest Level:</h2>
+              <a href="{% url 'level:classic_level_detail' hardest_level.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ hardest_level.level.name }}</a>
+            </div>
+            <div class="col-sm-6">
+              <h2 class="card-title">Level Counts:</h2>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Main: {{ level_counts.main }}</li>
+                <li class="list-group-item">Extended: {{ level_counts.extended }}</li>
+                <li class="list-group-item">Legacy: {{ level_counts.legacy }}</li>
+              </ul>
+            </div>
+          </div>
         </div>
-{% endif %}
-<h1>{{ player.username }}'s Profile</h1>
-  <h2>Beaten Levels:</h2>
-    {% for record in beaten_levels %}
-        <a href="{{ record.record_link }}">{{ record.level.name }}</a><br>
-    {% endfor %}
-    <h2>Player ranking:</h2>
-    <p>#{{ player_ranking }}</p>
-    <h2>Hardest level:</h2>
-    <p>{{ hardest_level.level.name }}</p>
-    <h2>First victors:</h2>
-    {% for record in first_victors %}
-        <p>{{ record.level.name }}</p><br>
-    {% endfor %}
-    <h2>Level Counts by Ranking:</h2>
-    <li>Main: {{ level_counts.main }}</li>
-    <li>Extended: {{ level_counts.extended }}</li>
-    <li>Legacy: {{ level_counts.legacy }}</li>
+      </div>
+
+        <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">Beaten levels:</h2>
+          <div class="d-flex flex-wrap">
+            {% for record in beaten_levels %}
+              <a href="{% url 'level:classic_level_detail' record.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ record.level.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">First victor in:</h2>
+          <div class="d-flex flex-wrap">
+            {% for record in first_victors %}
+              <a href="{% url 'level:classic_level_detail' record.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ record.level.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>List editors</h3>
+            </div>
+            <div class="card-body text-center">
+                <p>Contact any of these people if you need assistance regarding the list.</p>
+                {% for staff_member in staff_members %}
+                    <a class="text-decoration-none fw-bold text-black" href="{% url 'player:profile' staff_member.username %}">{{ staff_member }}</a>{% if not forloop.last %} - {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header text-center">
+                <h3>Guidelines</h3>
+            </div>
+            <div class="card-body text-center">
+                <p>Before any submission please consider checking the guidelines for the list. Any submission that does not follow the guidelines will be rejected.</p>
+                <a href="{% url 'guidelines' %}" class="btn btn-primary w-75">Read the guidelines</a>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <iframe src="https://discord.com/widget?id=1144377634831220847&theme=dark" class="w-100" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

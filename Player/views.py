@@ -1,21 +1,20 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .models import Player
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import PlayerCreationForm, LoginForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.messages.views import SuccessMessageMixin
+from .models import Player
+from .forms import PlayerCreationForm, LoginForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm, SocialPlatformForm
 from levelrecord.models import ClassicLevelRecord
 from django.db.models import Q
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.contrib.sites.shortcuts import get_current_site
-from .tokens import account_activation_token
-from django.utils.http import urlsafe_base64_decode
-from django.utils.encoding import force_str
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 from django.urls import reverse_lazy
-from django.contrib.messages.views import SuccessMessageMixin
+from .tokens import account_activation_token
 
 # Create your views here.
 
@@ -127,7 +126,7 @@ def profile(request, username):
     player = Player.objects.get(username=username)
 
     player_ranking = Player.objects.filter(classic_points__gt=player.classic_points).count() + 1
-    beaten_levels = ClassicLevelRecord.objects.filter(player=player)
+    beaten_levels = ClassicLevelRecord.objects.filter(player=player, level__ranking__lte=150)
     hardest_level = beaten_levels.order_by('level__ranking').first()
     first_victors = [record for record in beaten_levels if record.level.first_victor == player]
     level_counts = {
@@ -146,3 +145,22 @@ def profile(request, username):
     }
 
     return render(request, 'player/profile.html', context)
+
+@login_required
+def edit_social_platforms(request):
+    social_form = SocialPlatformForm(initial={'discord': request.user.discord, 'youtube': request.user.youtube, 'twitch': request.user.twitch, 'twitter': request.user.twitter})
+    if request.method == 'POST':
+        form = SocialPlatformForm(request.POST)
+        if form.is_valid():
+            player = Player.objects.get(pk=request.user.pk)
+            player.discord = form.cleaned_data['discord']
+            player.youtube = form.cleaned_data['youtube']
+            player.twitch = form.cleaned_data['twitch']
+            player.twitter = form.cleaned_data['twitter']
+            player.save()
+            return redirect('player:profile', username=request.user.username)
+        else:
+            messages.error(request, "Invalid form. Please enter valid URLs.")
+            return redirect('player:profile', username=request.user.username)
+        
+    return render(request, 'player/profile.html', {'social_form': social_form})

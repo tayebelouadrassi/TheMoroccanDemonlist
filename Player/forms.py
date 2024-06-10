@@ -47,3 +47,36 @@ class CustomPasswordResetForm(PasswordResetForm):
 
 class CustomPasswordResetConfirmForm(SetPasswordForm):
     captcha = ReCaptchaField()
+
+class SocialPlatformForm(forms.ModelForm):
+    discord = forms.CharField(max_length=255, required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'id': 'discord',
+            'placeholder': 'Your Discord username'
+        })
+    )
+    youtube = forms.CharField(max_length=255, required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'id': 'youtube',
+            'placeholder': 'Your YouTube channel'
+        })
+    )
+    twitch = forms.CharField(max_length=255, required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'id': 'twitch',
+            'placeholder': 'Your Twitch channel'
+        })
+    )
+    twitter = forms.CharField(max_length=255, required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'id': 'twitter',
+            'placeholder': 'Your Twitter profile'
+        })
+    )
+    class Meta:
+        model = Player
+        fields = ['discord', 'youtube', 'twitch', 'twitter']

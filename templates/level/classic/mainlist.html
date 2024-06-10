@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Main List{% endblock %}
+{% block title %}Classic Main List{% endblock %}
 {% block content %}
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8">
-            {% for level in mainlist_levels|dictsort:"ranking" %}
+            {% for level in main_levels|dictsort:"ranking" %}
                 <div class="card mt-3 mx-auto{% if forloop.last %} mb-3{% endif %}" style="width: 780px; max-width: 100%;">
                     <div class="row g-0">
                         <div class="col-md-4">
@@ -28,7 +28,6 @@
             {% endfor %}
         </div>
 
-        <!-- New section with list editors, guidelines, and Discord widget -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header text-center">

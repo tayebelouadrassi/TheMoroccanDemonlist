@@ -43,10 +43,10 @@ def detail(request, pk):
     return render(request, 'level/classic/detail.html', context)
 
 def classic_mainlist(request):
-    mainlist_levels = ClassicLevel.objects.filter(ranking__lte=75)
+    main_levels = ClassicLevel.objects.filter(ranking__lte=75)
     staff_members = Player.objects.filter(is_staff=True)
     context = {
-        'mainlist_levels': mainlist_levels,
+        'main_levels': main_levels,
         'staff_members': staff_members
     }
     return render(request, 'level/classic/mainlist.html', context)
