@@ -37,7 +37,7 @@ def login_user(request):
         else:
             form = LoginForm()
 
-        return render(request, 'player/login.html', {'form': form})
+        return render(request, 'player/authentication.html', {'form': form})
     
 def logout_user(request):
     logout(request)
@@ -62,7 +62,7 @@ def register_user(request):
         else:
             form = PlayerCreationForm()
 
-        return render(request, 'player/register.html', {'form': form})
+        return render(request, 'player/authentication.html', {'form': form})
 
 def verify_email(request):
     if not request.user.is_email_verified:

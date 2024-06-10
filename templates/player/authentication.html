@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}Login or Register{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Login</h5>
+                </div>
+                <div class="card-body">
+                    {% if login_form.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            There was an error with your form.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+
+                    <form action="{% url 'player:login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                            {% if login_form.username.errors %}
+                                <div class="text-danger">
+                                    {{ login_form.username.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            {% if login_form.password.errors %}
+                                <div class="text-danger">
+                                    {{ login_form.password.errors.as_text }}
+                                </div>
+                            {% endif %}
+                            <div id="{{ form.password.id_for_label }}_help" class="form-text">
+                                <a href="{% url 'player:password_reset' %}" class="text-decoration-none">Forgot your password? Reset it here.</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            {{ form.captcha }} 
+                        </div>
+                        
+                        <div class="text-center">
+                            <input type="submit" value="Login" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Register</h5>
+                </div>
+                <div class="card-body">
+                    {% if form.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            There was an error with your form.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+        
+                    <form action="{% url 'player:register' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                            {% if form.username.errors %}
+                                <div class="text-danger">
+                                {{ form.username.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            {% if form.email.errors %}
+                                <div class="text-danger">
+                                    {{ form.email.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="region" class="form-label">Region</label>
+                            {{ form.region }}
+                            {% if form.region.errors %}
+                                <div class="text-danger">
+                                    {{ form.region.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password1" name="password1" required>
+                            {% if form.password1.errors %}
+                                <div class="text-danger">
+                                {{ form.password1.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="password2" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="password2" name="password2" required>
+                            {% if form.password2.errors %}
+                                <div class="text-danger">
+                                {{ form.password2.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+        
+                        <div class="mb-3">
+                            {{ form.captcha }} 
+                        </div>
+        
+                        <div class="text-center">
+                            <input type="submit" value="Register" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
