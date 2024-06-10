@@ -15,4 +15,5 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', views.CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', views.CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('edit-social-platforms/', views.edit_social_platforms, name='edit_social_platforms'),
+    path('search/', views.search, name='search'),
 ]

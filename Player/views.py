@@ -6,14 +6,14 @@ from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.messages.views import SuccessMessageMixin
 from .models import Player
-from .forms import PlayerCreationForm, LoginForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm, SocialPlatformForm
+from .forms import PlayerCreationForm, LoginForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm, SocialPlatformForm, PlayerSearchForm
 from levelrecord.models import ClassicLevelRecord
 from django.db.models import Q
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .tokens import account_activation_token
 
 # Create your views here.
@@ -164,3 +164,19 @@ def edit_social_platforms(request):
             return redirect('player:profile', username=request.user.username)
         
     return render(request, 'player/profile.html', {'social_form': social_form})
+
+def search(request):
+    if request.method == 'POST':
+        form = PlayerSearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            players = Player.objects.filter(username__icontains=query)
+            if len(players) == 1:
+                player = players[0]
+                if isinstance(player, Player):
+                    return redirect(reverse('player:profile', args=[player.username]))
+            else:
+                return render(request, 'player/search.html', {'players': players})
+        else:
+            messages.error(request, ("No player found. Please try again."))
+            return redirect('player:profile', username=request.user.username)

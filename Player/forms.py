@@ -80,3 +80,6 @@ class SocialPlatformForm(forms.ModelForm):
     class Meta:
         model = Player
         fields = ['discord', 'youtube', 'twitch', 'twitter']
+
+class PlayerSearchForm(forms.Form):
+    query = forms.CharField(max_length=255)

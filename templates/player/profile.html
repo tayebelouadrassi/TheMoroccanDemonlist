@@ -57,7 +57,7 @@
               </ul>
             </div>
             <div class="col-md-6">
-                <form class="d-flex" role="search" method="post" action="{% url 'level:search' %}">
+                <form class="d-flex" role="search" method="post" action="{% url 'player:search' %}">
                     {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="Search for a player" aria-label="Search" name="query">
                     <button class="btn btn-primary" type="submit">Search</button>

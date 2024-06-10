@@ -24,7 +24,7 @@ def search(request):
             else:
                 return render(request, 'level/search.html', {'levels': levels})
         else:
-            messages.error(request, ("No levels found. Please try again."))
+            messages.error(request, ("No level found. Please try again."))
             return redirect("level:classic_mainlist")
 
 def detail(request, pk):
