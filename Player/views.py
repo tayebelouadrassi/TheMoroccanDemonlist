@@ -124,6 +124,7 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
 
 def profile(request, username):
     player = Player.objects.get(username=username)
+    staff_members = Player.objects.filter(is_staff=True)
 
     player_ranking = Player.objects.filter(classic_points__gt=player.classic_points).count() + 1
     beaten_levels = ClassicLevelRecord.objects.filter(player=player, level__ranking__lte=150)
@@ -142,6 +143,7 @@ def profile(request, username):
         'hardest_level': hardest_level,
         'first_victors': first_victors,
         'level_counts': level_counts,
+        'staff_members': staff_members
     }
     return render(request, 'player/profile.html', context)
 
@@ -165,6 +167,7 @@ def edit_social_platforms(request):
     return render(request, 'player/profile.html', {'social_form': social_form})
 
 def search(request):
+    staff_members = Player.objects.filter(is_staff=True)
     if request.method == 'POST':
         form = PlayerSearchForm(request.POST)
         if form.is_valid():
@@ -175,7 +178,11 @@ def search(request):
                 if isinstance(player, Player):
                     return redirect(reverse('player:profile', args=[player.username]))
             else:
-                return render(request, 'player/search.html', {'players': players})
+                context = {
+                    'players': players,
+                    'staff_members': staff_members
+                }
+                return render(request, 'player/search.html', context)
         else:
             messages.error(request, ("No player found. Please try again."))
             return redirect('player:profile', username=request.user.username)

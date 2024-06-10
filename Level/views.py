@@ -9,6 +9,7 @@ from django.contrib import messages
 # Create your views here.
 
 def search(request):
+    staff_members = Player.objects.filter(is_staff=True)
     if request.method == 'POST':
         form = LevelSearchForm(request.POST)
         if form.is_valid():
@@ -21,7 +22,11 @@ def search(request):
                 if isinstance(level, ClassicLevel):
                     return redirect(reverse('level:classic_level_detail', args=[level.id]))
             else:
-                return render(request, 'level/search.html', {'levels': levels})
+                context = {
+                    'levels': levels,
+                    'staff_members': staff_members
+                }
+                return render(request, 'level/search.html', context)
         else:
             messages.error(request, ("No level found. Please try again."))
             return redirect("level:classic_mainlist")
@@ -65,15 +70,19 @@ def classic_mainlist(request):
 
 def classic_extendedlist(request):
     extended_levels = ClassicLevel.objects.filter(ranking__range=(76, 150))
+    staff_members = Player.objects.filter(is_staff=True)
     context = {
-        'extended_levels': extended_levels
+        'extended_levels': extended_levels,
+        'staff_members': staff_members
     }
     return render(request, 'level/classic/extendedlist.html', context)
 
 def classic_legacylist(request):
     legacy_levels = ClassicLevel.objects.filter(ranking__gt=150)
+    staff_members = Player.objects.filter(is_staff=True)
     context = {
-        'legacy_levels': legacy_levels
+        'legacy_levels': legacy_levels,
+        'staff_members': staff_members
     }
     return render(request, 'level/classic/legacylist.html', context)
 
