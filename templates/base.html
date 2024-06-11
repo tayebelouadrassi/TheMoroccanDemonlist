@@ -7,8 +7,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the height of the viewport */
+}
+    
+.content {
+flex-grow: 1; /* Allow content to grow and push footer down */
+}
+    
+footer {
+flex-shrink: 0; /* Don't allow footer to shrink */
+}
+</style>
 <body data-bs-theme="light" class="page-layout">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-lg">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="{% url 'home' %}">TMDL.</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +88,7 @@
         </div>
     </nav>
     
-
+    <div class="container mt-5">
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -82,10 +97,13 @@
             </div>
         {% endfor %}
     {% endif %}
+    </div>
 
-{% block content %}
-{% endblock %}
-<footer class="bg-body-tertiary text-center text-lg-start mt-3">
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+<footer class="bg-body-tertiary text-center text-lg-start mt-3 shadow-lg">
     <div class="text-center p-3">
         Made by <a class="text-body fw-bold text-decoration-none" href="https://github.com/apostorial" target="_blank">Apostorial</a>
         <br>
@@ -94,6 +112,7 @@
         Feel free to contribute to the website on <a class="text-body fw-bold text-decoration-none" href="https://github.com/apostorial/TheMoroccanDemonlist" target="_blank">GitHub</a> (The code is bad pls help)
     </div>
 </footer>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4811306720061580" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

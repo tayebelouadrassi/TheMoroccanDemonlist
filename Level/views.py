@@ -21,6 +21,11 @@ def search(request):
                 level = levels[0]
                 if isinstance(level, ClassicLevel):
                     return redirect(reverse('level:classic_level_detail', args=[level.id]))
+                elif isinstance(level, PlatformerLevel):
+                    return redirect(reverse('level:platformer_level_detail', args=[level.id]))
+            elif len(levels) == 0:
+                messages.error(request, ("No level found. Please try again."))
+                return redirect("level:classic_mainlist")
             else:
                 context = {
                     'levels': levels,
@@ -28,8 +33,8 @@ def search(request):
                 }
                 return render(request, 'level/search.html', context)
         else:
-            messages.error(request, ("No level found. Please try again."))
-            return redirect("level:classic_mainlist")
+            form = LevelSearchForm()
+            return render(request, 'level/search.html', {'form': form, 'staff_members': staff_members})
 
 def detail(request, pk):
     if ClassicLevel.objects.filter(pk=pk).exists():

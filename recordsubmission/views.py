@@ -8,6 +8,10 @@ from django.contrib import messages
 
 @login_required
 def submit_record(request, record_type):
+    if not request.user.is_email_verified:
+        messages.error(request, 'You need to activate your email in order to submit a record.')
+        return redirect('player:profile', username=request.user.username)
+    
     if record_type == 'classic':
         form_class = ClassicRecordSubmissionForm
     elif record_type == 'platformer':

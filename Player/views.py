@@ -177,6 +177,9 @@ def search(request):
                 player = players[0]
                 if isinstance(player, Player):
                     return redirect(reverse('player:profile', args=[player.username]))
+            elif len(players) == 0:
+                messages.error(request, ("No player found. Please try again."))
+                return redirect("player:profile", username=request.user.username)
             else:
                 context = {
                     'players': players,
@@ -184,5 +187,5 @@ def search(request):
                 }
                 return render(request, 'player/search.html', context)
         else:
-            messages.error(request, ("No player found. Please try again."))
-            return redirect('player:profile', username=request.user.username)
+            form = PlayerSearchForm()
+            return render(request, 'player/search.html', {'form': form, 'staff_members': staff_members})
