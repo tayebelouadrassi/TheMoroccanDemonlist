@@ -165,27 +165,28 @@
       </div>
     </div>
     <div class="col-md-4">
-          <div class="card">
-            <div class="card-header text-center">
-                <h3>Settings</h3>
-            </div>
-            <div class="card-body text-center">
-              <p class="text-start">Want to change your password? Click the button below and you will be redirected to the change password form.</p>
-              <a href="{% url 'player:password_reset' %}" class="btn btn-primary w-75">Change Password</a>
-            </div>
-            <hr>
-            <div class="card-body">
-              <p>Select the theme you would like to use.</p>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="radio" name="theme" id="lightTheme" value="light" checked>
-                <label class="form-check-label" for="lightTheme">Light</label>
-            </div>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="radio" name="theme" id="darkTheme" value="dark">
-                <label class="form-check-label" for="darkTheme">Dark</label>
-            </div>
-            </div>
+      {% if player == request.user %}
+      <div class="card">
+        <div class="card-header text-center">
+            <h3>Settings</h3>
         </div>
+        <div class="card-body text-center">
+          <p class="text-start">Want to change your password? Click the button below and you will be redirected to the change password form.</p>
+          <a href="{% url 'player:password_reset' %}" class="btn btn-primary w-75">Change Password</a>
+        </div>
+        <hr>
+        <div class="card-body">
+          <p>Select the theme you would like to use.</p>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="radio" name="theme" id="lightTheme" value="light" checked>
+            <label class="form-check-label" for="lightTheme">Light</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="radio" name="theme" id="darkTheme" value="dark">
+            <label class="form-check-label" for="darkTheme">Dark</label>
+        </div>
+      </div>
+      {% endif %}
         <div class="card mt-3">
             <div class="card-header text-center">
                 <h3>List editors</h3>
