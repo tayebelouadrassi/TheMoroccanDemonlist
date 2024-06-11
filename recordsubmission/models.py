@@ -26,7 +26,7 @@ class RecordSubmission(models.Model):
 
 class ClassicRecordSubmission(RecordSubmission):
     level = models.ForeignKey(ClassicLevel, on_delete=models.CASCADE)
-    record_percentage = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
+    record_percentage = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
 
     class Meta:
         verbose_name = "Classic Record Submission"
@@ -34,7 +34,7 @@ class ClassicRecordSubmission(RecordSubmission):
 
 class PlatformerRecordSubmission(RecordSubmission):
     level = models.ForeignKey(PlatformerLevel, on_delete=models.CASCADE)
-    record_time = models.DurationField(default=timedelta(minutes=30))
+    record_time = models.DurationField()
 
     class Meta:
         verbose_name = "Platformer Record Submission"

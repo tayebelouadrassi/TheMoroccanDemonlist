@@ -7,9 +7,9 @@ class ClassicRecordSubmissionForm(forms.ModelForm):
         fields = ['level', 'record_link', 'record_percentage', 'comment']
         widgets = {
             'level': forms.Select(attrs={'class': 'form-control'}),
-            'record_link': forms.URLInput(attrs={'class': 'form-control'}),
-            'record_percentage': forms.NumberInput(attrs={'class': 'form-control'}),
-            'comment': forms.Textarea(attrs={'class': 'form-control'}),
+            'record_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://youtu.be/xvFZjo5PgG0'}),
+            'record_percentage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '69%'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'hello pls accept my record i worked hard on it thx'}),
         }
 
     def clean_comment(self):
@@ -31,9 +31,9 @@ class PlatformerRecordSubmissionForm(forms.ModelForm):
         fields = ['level', 'record_link', 'record_time', 'comment']
         widgets = {
             'level': forms.Select(attrs={'class': 'form-control'}),
-            'record_link': forms.URLInput(attrs={'class': 'form-control'}),
-            'record_time': forms.TextInput(attrs={'class': 'form-control'}),
-            'comment': forms.Textarea(attrs={'class': 'form-control'}),
+            'record_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://youtu.be/xvFZjo5PgG0'}),
+            'record_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'HH:MM:SS.fff'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'hello pls accept my record i worked hard on it thx'}),
         }
 
     def clean_comment(self):
