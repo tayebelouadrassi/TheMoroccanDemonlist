@@ -12,9 +12,37 @@
             <hr>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="mb-3">
+                    <label for="level" class="form-label">Level</label>
+                    {{ form.level }}
+                    {% if form.level.errors %}
+                        <div class="text-danger">{{ form.level.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="id_record_link" class="form-label">Record Link</label>
+                    {{ form.record_link }}
+                    {% if form.record_link.errors %}
+                        <div class="text-danger">{{ form.record_link.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="id_record_percentage" class="form-label">Record Percentage</label>
+                    {{ form.record_percentage }}
+                    {% if form.record_percentage.errors %}
+                        <div class="text-danger">{{ form.record_percentage.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="id_comment" class="form-label">Comment</label>
+                    {{ form.comment }}
+                    {% if form.comment.errors %}
+                        <div class="text-danger">{{ form.comment.errors }}</div>
+                    {% endif %}
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            
         </div>
     </div>
 </div>

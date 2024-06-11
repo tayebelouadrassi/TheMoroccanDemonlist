@@ -25,6 +25,6 @@ urlpatterns = [
     path('', level_views.classic_mainlist, name='home'),
     path('player/', include('player.urls')),
     path('levels/', include('level.urls')),
-    path('submit-record/', include('recordsubmission.urls')),
+    path('submit/', include('recordsubmission.urls')),
     path('guidelines/', views.guidelines, name='guidelines'),
 ]

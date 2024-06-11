@@ -12,6 +12,19 @@ class ClassicRecordSubmissionForm(forms.ModelForm):
             'comment': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
+    def clean_comment(self):
+        comment = self.cleaned_data['comment']
+        if len(comment) > 50:
+            raise forms.ValidationError("Comment cannot exceed 50 characters.")
+        return comment
+    
+    def clean_record_percentage(self):
+        record_percentage = self.cleaned_data['record_percentage']
+        level = self.cleaned_data.get('level')
+        if level and record_percentage < level.min_completion:
+            raise forms.ValidationError("Your record percentage is lower than the minimum requirement of that level.")
+        return record_percentage
+
 class PlatformerRecordSubmissionForm(forms.ModelForm):
     class Meta:
         model = PlatformerRecordSubmission
@@ -22,3 +35,9 @@ class PlatformerRecordSubmissionForm(forms.ModelForm):
             'record_time': forms.TextInput(attrs={'class': 'form-control'}),
             'comment': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+    def clean_comment(self):
+        comment = self.cleaned_data['comment']
+        if len(comment) > 50:
+            raise forms.ValidationError("Comment cannot exceed 50 characters.")
+        return comment

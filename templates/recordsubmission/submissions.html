@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}My Submissions{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1>My Submissions</h1>
+    <hr>
+    <h2>Classic Record Submissions</h2>
+    {% if classic_submissions %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Submission ID</th>
+                    <th>Level</th>
+                    <th>Record Link</th>
+                    <th>Percentage</th>
+                    <th>Comment</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in classic_submissions %}
+                    <tr>
+                        <td>{{ submission.id }}</td>
+                        <td>{{ submission.level.name }}</td>
+                        <td><a href="{{ submission.record_link }}" target="_blank" class="btn btn-primary">YouTube</a></td>
+                        <td>{{ submission.record_percentage }}%</td>
+                        <td>{{ submission.comment }}</td>
+                        <td>
+                            <button class="btn 
+                                {% if submission.status == 'Approved' %}
+                                    btn-success
+                                {% elif submission.status == 'Rejected' %}
+                                    btn-danger
+                                {% else %}
+                                    btn-warning
+                                {% endif %}
+                            ">{{ submission.status }}</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No classic record submissions.</p>
+    {% endif %}
+    <hr>
+    <h2>Platformer Record Submissions</h2>
+    {% if platformer_submissions %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Submission ID</th>
+                    <th>Level</th>
+                    <th>Record Link</th>
+                    <th>Time</th>
+                    <th>Comment</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in platformer_submissions %}
+                    <tr>
+                        <td>{{ submission.id }}</td>
+                        <td>{{ submission.level.name }}</td>
+                        <td><a href="{{ submission.record_link }}" target="_blank">{{ submission.record_link }}</a></td>
+                        <td>{{ submission.record_time }}</td>
+                        <td>{{ submission.comment }}</td>
+                        <td>
+                            <button class="btn 
+                                {% if submission.status == 'Approved' %}
+                                    btn-success
+                                {% elif submission.status == 'Rejected' %}
+                                    btn-danger
+                                {% else %}
+                                    btn-warning
+                                {% endif %}
+                            ">{{ submission.status }}</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No platformer record submissions.</p>
+    {% endif %}
+</div>
+{% endblock %}

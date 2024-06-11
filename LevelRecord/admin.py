@@ -3,5 +3,15 @@ from .models import ClassicLevelRecord, PlatformerLevelRecord
 
 # Register your models here.
 
-admin.site.register(ClassicLevelRecord)
-admin.site.register(PlatformerLevelRecord)
+
+class ClassicLevelRecordAdmin(admin.ModelAdmin):
+    list_display = ('level', 'player', 'record_link', 'record_percentage')
+    search_fields = ['level', 'player']
+
+admin.site.register(ClassicLevelRecord, ClassicLevelRecordAdmin)
+
+class PlatformerLevelRecordAdmin(admin.ModelAdmin):
+    list_display = ('level', 'player', 'record_link', 'record_time')
+    search_fields = ['level', 'player']
+
+admin.site.register(PlatformerLevelRecord, PlatformerLevelRecordAdmin)

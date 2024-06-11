@@ -55,6 +55,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{% url 'player:profile' request.user.username %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recordsubmission:submissions' %}">My submissions</a></li>
                             <li><a class="dropdown-item" href="{% url 'recordsubmission:submit_record' 'classic' %}">Submit a record</a></li>
                             <li><a class="dropdown-item" href="{% url 'player:logout' %}">Logout</a></li>
                         </ul>
