@@ -112,6 +112,39 @@ flex-shrink: 0; /* Don't allow footer to shrink */
         Feel free to contribute to the website on <a class="text-body fw-bold text-decoration-none" href="https://github.com/apostorial/TheMoroccanDemonlist" target="_blank">GitHub</a> (The code is bad pls help)
     </div>
 </footer>
+<script>
+    function setTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-bs-theme', savedTheme);
+            if (savedTheme === 'light') {
+                document.getElementById('lightTheme').checked = true;
+            } else {
+                document.getElementById('darkTheme').checked = true;
+            }
+        }
+    }
+
+    function handleThemeChange() {
+        const lightThemeRadio = document.getElementById('lightTheme');
+        const darkThemeRadio = document.getElementById('darkTheme');
+
+        lightThemeRadio.addEventListener('change', () => {
+            localStorage.setItem('theme', 'light');
+            document.body.setAttribute('data-bs-theme', 'light');
+        });
+
+        darkThemeRadio.addEventListener('change', () => {
+            localStorage.setItem('theme', 'dark');
+            document.body.setAttribute('data-bs-theme', 'dark');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setTheme();
+        handleThemeChange();
+    });
+</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4811306720061580" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

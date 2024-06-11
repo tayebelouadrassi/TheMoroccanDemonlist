@@ -15,7 +15,7 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <a class="text-decoration-none text-black" style="cursor: pointer;" href="{% url 'level:classic_level_detail' level.id %}">
+                                    <a class="text-decoration-none" style="cursor: pointer; color:inherit;" href="{% url 'level:classic_level_detail' level.id %}">
                                         #{{ level.ranking }} - {{ level.name }}
                                     </a>
                                 </h5>
@@ -36,7 +36,7 @@
                 <div class="card-body text-center">
                     <p>Contact any of these people if you need assistance regarding the list.</p>
                     {% for staff_member in staff_members %}
-                        <a class="text-decoration-none fw-bold text-black" href="{% url 'player:profile' staff_member.username %}">{{ staff_member }}</a>{% if not forloop.last %} - {% endif %}
+                        <a style="color: inherit;" class="text-decoration-none fw-bold" href="{% url 'player:profile' staff_member.username %}">{{ staff_member }}</a>{% if not forloop.last %} - {% endif %}
                     {% endfor %}
                 </div>
             </div>

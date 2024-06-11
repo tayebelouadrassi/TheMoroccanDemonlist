@@ -36,7 +36,7 @@
                             <tbody>
                                 {% for record in level.platformerlevelrecord_set.all %}
                                     <tr>
-                                        <td><a href="{% url 'player:profile' record.player.username %}" class="text-decoration-none text-black">{{ record.player.username }}</a></td>
+                                        <td><a href="{% url 'player:profile' record.player.username %}" style="color: inherit;" class="text-decoration-none">{{ record.player.username }}</a></td>
                                         <td>{{ record.record_time }}</td>
                                         <td>
                                             <a class="btn btn-outline-primary btn-sm" href="{{ record.record_link }}" target="_blank">YouTube</a>
@@ -57,7 +57,7 @@
                 <div class="card-body text-center">
                     <p>Contact any of these people if you need assistance regarding the list.</p>
                     {% for staff_member in staff_members %}
-                        <a class="text-decoration-none fw-bold text-black" href="{% url 'player:profile' staff_member.username %}">{{ staff_member }}</a>{% if not forloop.last %} - {% endif %}
+                        <a class="text-decoration-none fw-bold" style="color: inherit;" href="{% url 'player:profile' staff_member.username %}">{{ staff_member }}</a>{% if not forloop.last %} - {% endif %}
                     {% endfor %}
                 </div>
             </div>
