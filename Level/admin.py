@@ -45,7 +45,7 @@ class ClassicLevelAdmin(CustomSortableAdminMixin, admin.ModelAdmin):
             obj.min_points = round((500 * (1 - math.log(obj.ranking, 151))) * 1/3, 2)
             obj.save()
 
-            for level_record in obj.levelrecord_set.all():
+            for level_record in obj.classiclevelrecord_set.all():
                 level_record.save()
 
         self.message_user(request, f"{queryset.count()} levels saved successfully.")
