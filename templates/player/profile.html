@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
   {% if not player.is_email_verified and request.user == player %}
-    <div class="alert alert-info fade show" role="alert">
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
       Please verify your email for a full account experience.
       <a href="{% url 'player:verify-email' %}" class="alert-link">Resend email.</a>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

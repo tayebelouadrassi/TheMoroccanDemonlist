@@ -27,10 +27,18 @@
                     {% endif %}
                 </div>
                 <div class="mb-3">
+                    {% if record_type == 'classic' %}
                     <label for="id_record_percentage" class="form-label">Record Percentage</label>
                     {{ form.record_percentage }}
                     {% if form.record_percentage.errors %}
                         <div class="text-danger">{{ form.record_percentage.errors }}</div>
+                    {% endif %}
+                    {% elif record_type == 'platformer' %}
+                    <label for="id_record_time" class="form-label">Record Time</label>
+                    {{ form.record_time }}
+                    {% if form.record_time.errors %}
+                        <div class="text-danger">{{ form.record_time.errors }}</div>
+                    {% endif %}
                     {% endif %}
                 </div>
                 <div class="mb-3">

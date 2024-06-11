@@ -34,7 +34,7 @@ class ClassicLevelRecord(LevelRecord):
         verbose_name_plural = "Classic Level Records"
 
 class PlatformerLevelRecord(LevelRecord):
-    record_time = models.DurationField(default=timedelta(minutes=30))
+    record_time = models.DurationField(default=timedelta(minutes=6, seconds=9, milliseconds=420))
     level = models.ForeignKey(PlatformerLevel, on_delete=models.CASCADE, null=True)
 
     def save(self, *args, **kwargs):
