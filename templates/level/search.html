@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Search results{% endblock %}
 {% block content %}
-<div class="container mt-5">
+<div class="container">
     <div class="row">
         <div class="col-md-8">
             {% for level in levels|dictsort:"ranking" %}

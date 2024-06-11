@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Classic Legacy List{% endblock %}
 {% block content %}
-<div class="container mt-5">
+<div class="container">
     <div class="row">
         <div class="col-md-8">
             {% for level in legacy_levels|dictsort:"ranking" %}
