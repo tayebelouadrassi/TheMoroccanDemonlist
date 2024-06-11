@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Submit Record{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">Submit a Record</h1>
+            <div class="mb-3">
+                <a href="{% url 'recordsubmission:submit_record' 'classic' %}" class="btn btn-primary">Classic Record</a>
+                <a href="{% url 'recordsubmission:submit_record' 'platformer' %}" class="btn btn-primary">Platformer Record</a>
+            </div>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

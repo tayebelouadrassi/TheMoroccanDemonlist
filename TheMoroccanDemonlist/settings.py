@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'region',
     'level',
     'levelrecord',
+    'recordsubmission',
 ]
 
 MIDDLEWARE = [

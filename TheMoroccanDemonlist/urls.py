@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from level import views as level_views
 
 urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
+    path('', level_views.classic_mainlist, name='home'),
     path('player/', include('player.urls')),
     path('levels/', include('level.urls')),
+    path('submit-record/', include('recordsubmission.urls')),
     path('guidelines/', views.guidelines, name='guidelines'),
 ]

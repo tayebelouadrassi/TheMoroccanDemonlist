@@ -127,19 +127,19 @@ def profile(request, username):
     staff_members = Player.objects.filter(is_staff=True)
 
     player_ranking = Player.objects.filter(classic_points__gt=player.classic_points).count() + 1
-    beaten_levels = ClassicLevelRecord.objects.filter(player=player, level__ranking__lte=150)
-    hardest_level = beaten_levels.order_by('level__ranking').first()
-    first_victors = [record for record in beaten_levels if record.level.first_victor == player]
+    completed_levels = ClassicLevelRecord.objects.filter(player=player, level__ranking__lte=150)
+    hardest_level = completed_levels.order_by('level__ranking').first()
+    first_victors = [record for record in completed_levels if record.level.first_victor == player]
     level_counts = {
-      'main': beaten_levels.filter(level__ranking__lte=75).count(),
-      'extended': beaten_levels.filter(Q(level__ranking__gt=75) & Q(level__ranking__lte=150)).count(),
-      'legacy': beaten_levels.filter(level__ranking__gt=150).count()
+      'main': completed_levels.filter(level__ranking__lte=75).count(),
+      'extended': completed_levels.filter(Q(level__ranking__gt=75) & Q(level__ranking__lte=150)).count(),
+      'legacy': completed_levels.filter(level__ranking__gt=150).count()
     }
 
     context = {
         'player': player,
         'player_ranking': player_ranking,
-        'beaten_levels': beaten_levels,
+        'completed_levels': completed_levels,
         'hardest_level': hardest_level,
         'first_victors': first_victors,
         'level_counts': level_counts,

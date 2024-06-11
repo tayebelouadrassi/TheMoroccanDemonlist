@@ -50,7 +50,7 @@
                 <li class="list-unstyled">
                     {% if player == request.user %}
                     <a href="" data-bs-toggle="modal" data-bs-target="#socialModal" class="text-decoration-none ms-3">
-                        <img src="{% static 'images/pencil.png' %}" style="width:32px;" alt="Twitter Icon" class="twitter-icon me-1">
+                        <img src="{% static 'images/pencil.png' %}" style="width:32px;" alt="Pencil Icon" class="twitter-icon me-1">
                     </a>
                     {% endif %}
                 </li>
@@ -137,14 +137,14 @@
 
         <div class="card mb-4">
         <div class="card-body">
-          <h2 class="card-title">Beaten levels:</h2>
+          <h2 class="card-title">Completed levels:</h2>
           <div class="d-flex flex-wrap">
-            {% if beaten_levels %}
-            {% for record in beaten_levels %}
+            {% if completed_levels %}
+            {% for record in completed_levels %}
               <a href="{% url 'level:classic_level_detail' record.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ record.level.name }}</a>
             {% endfor %}
             {% else %}
-              <a class="btn btn-outline-primary btn-lg me-2 mb-2">No beaten levels found</a>
+              <a class="btn btn-outline-primary btn-lg me-2 mb-2">No completed levels found</a>
             {% endif %}
           </div>
         </div>
@@ -153,7 +153,7 @@
         <div class="card-body">
           <h2 class="card-title">First victor in:</h2>
           <div class="d-flex flex-wrap">
-            {% if beaten_levels %}
+            {% if first_victors %}
             {% for record in first_victors %}
               <a href="{% url 'level:classic_level_detail' record.level.id %}" class="btn btn-outline-primary btn-lg me-2 mb-2">{{ record.level.name }}</a>
             {% endfor %}
