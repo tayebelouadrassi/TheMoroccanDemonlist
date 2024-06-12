@@ -46,9 +46,9 @@ INSTALLED_APPS = [
     'django_recaptcha',
     'adminsortable2',
     'django_email_verification',
+    'level',
     'player',
     'region',
-    'level',
     'levelrecord',
     'recordsubmission',
 ]
