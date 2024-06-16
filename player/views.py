@@ -56,7 +56,7 @@ def register_user(request):
                 password = form.cleaned_data['password1']
                 user = authenticate(username=username, password=password)
                 login(request, user)
-                messages.success(request, ("Registration successful. An email has been sent with instructions to verify your account."))
+                messages.success(request, ("Registration successful. An email has been sent with instructions to verify your account. Check your SPAM folder if you don't see it in your inbox."))
                 return redirect("player:verify-email")
         else:
             form = PlayerCreationForm()
